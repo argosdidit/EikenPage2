@@ -1,0 +1,156 @@
+﻿body {
+  font-family: sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+/* 共通ヘッダー */
+.header, header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+.header h1, header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+/* 戻るボタン */
+.BtnBack {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+  background: #e0e0e0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #333;
+}
+
+.BtnLogout {
+  position: absolute;
+  left: 150px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-decoration: none;
+  background: #e0e0e0;
+  padding: 6px 12px;
+  border-radius: 6px;
+  color: #333;
+}
+
+.BtnBack:hover {
+  background: #ccc;
+}
+.BtnLogout:hover {
+  background: #ccc;
+}
+
+.accont-info {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 0;
+  line-height: 0.05; /* ← お好みで調整 */
+}
+
+/* 問題カード */
+.quiz-box {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* 問題文 */
+.quiz-question {
+  font-size: 18px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* 選択肢 */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option {
+  background: #f1f1f1;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.option:hover {
+  background: #e0e0e0;
+}
+
+.option.selected {
+  background: #ccffcc; /* 薄緑 */
+}
+
+/* 採点結果 */
+.option.correct {
+  background: #b2f2bb; /* 緑 */
+}
+
+.option.incorrect {
+  background: #ffa8a8; /* 赤 */
+}
+
+#result-box div {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.button-area {
+  text-align: center;
+  margin: 30px;
+}
+
+#check-all {
+  padding: 12px 24px;
+  font-size: 18px;
+  border: none;
+  border-radius: 8px;
+  background: #87cefa;
+  cursor: pointer;
+}
+
+#check-all:hover {
+  background: #5dbbe6;
+}
+
+#historyBox {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#historyBox table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+}
+
+#historyBox table th,
+#historyBox table td {
+  padding: 4px 8px;
+  text-align: center;
+}
