@@ -123,9 +123,9 @@ const Thisproject = (() => {
         })
         .then(res => res.json())
         .then(data => {
-          console.log("ACCOUNT NAME:", data.accountname);  // ★ 追加
+          console.log("ACCOUNT NAME:", data.accountName);  // ★ 追加
           if (data.result === "OK") {
-            getAccountName = data.accountname;
+            getAccountName = data.accountName;
             window.location.href = `level/level.html?id=${getAccountID}&name=${getAccountName}`;
             // ここで画面遷移など可能
           } else {
