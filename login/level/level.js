@@ -86,6 +86,15 @@
         container.appendChild(btn);
       });
 
+      const BtnLogout = document.createElement("a");
+      BtnLogout.className = "level-button";
+      BtnLogout.textContent = "ログアウト";
+      BtnLogout.style.backgroundColor = "#ccc";
+      BtnLogout.addEventListener("click", () => {
+        window.location.href = `../login.html?id=${getAccountId}&name=${getAccountName}`;
+      });
+      container.appendChild(BtnLogout);
+
       return this;
     },
 
