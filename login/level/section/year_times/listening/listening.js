@@ -61,15 +61,25 @@ const ListeningApp = (() => {
       const { label, color } = levelMap[levelParam] || levelMap["pre2"];
       header.innerHTML =
       `
+      <header class="header">
+      <h1>リスニング ${label} ${year}年 ${times}回</h1>
+      <div class="header-row">
+      <!-- 左カラム -->
+      <div class="left-group">
       <a href="../year_times.html?level=${levelParam}&field=${fieldParam}" class="BtnBack">← 戻る</a>
       <a href="../../../../login.html?id=${getAccountId}&name=${getAccountName}" class="BtnLogout">ログアウト</a>
-      <h1>リスニング ${label} ${year}年 ${times}回</h1>
-      <div class="accont-info">
+      </div>
+      <!-- 中央カラム（★アイコン） -->
+      <div class="center-group">
+      <img id="page-icon" class="page-icon" src="" alt="page icon">
+      </div>
+      <!-- 右カラム -->
+      <div class="right-group">
       <p>ID: ${getAccountId}</p>
-      <br>
       <p>${getAccountName}さん</p>
       </div>
       </div>
+      </header>
       `;
       header.className = "header";
       header.style.backgroundColor = color;
@@ -217,21 +227,30 @@ const ListeningApp = (() => {
     },
     settingIcon() {
       const favicon = document.querySelector('#dynamic-favicon');
+      const pageIcon = document.querySelector('#page-icon'); // ← 中央アイコン
+      let iconPath = ""; // 最終的にここに画像パスを入れる
       switch(levelParam){
         case "grade1":
-          favicon.href = "../../../../PageIcon/Level1_Listening.png";
+          iconPath = "../../../../PageIcon/Level1_Listening.png";
           break;
         case "pre1":
-          favicon.href = "../../../../PageIcon/LevelPre1_Listening.png";
+          iconPath = "../../../../PageIcon/LevelPre1_Listening.png";
           break;
         case "grade2":
-          favicon.href = "../../../../PageIcon/Level2_Listening.png";
+          iconPath = "../../../../PageIcon/Level2_Listening.png";
           break;
         case "pre2":
-          favicon.href = "../../../../PageIcon/LevelPre2_Listening.png";
+          iconPath = "../../../../PageIcon/LevelPre2_Listening.png";
           break;
         default:
-          break;
+          iconPath = "../../../../PageIcon/EikenTitle.png"; // ← デフォルト
+        break;
+      }
+      // favicon に設定
+      favicon.href = iconPath;
+      // page-icon にも設定
+      if (pageIcon) {
+        pageIcon.src = iconPath;
       }
     }
   };
