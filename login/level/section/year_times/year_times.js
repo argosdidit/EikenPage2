@@ -74,15 +74,25 @@
       header = document.getElementById("header");
       header.innerHTML =
       `
+      <header class="header">
+      <h1>${label} ${fieldLabel} 過去問</h1>
+      <div class="header-row">
+      <!-- 左カラム -->
+      <div class="left-group">
       <a href="../section.html?level=${levelParam}&id=${getAccountId}&name=${getAccountName}" class="BtnBack">← 戻る</a>
       <a href="../../../login.html?id=${getAccountId}&name=${getAccountName}" class="BtnLogout">ログアウト</a>
-      <h1>${label} ${fieldLabel} 過去問</h1>
-      <div class="accont-info">
+      </div>
+      <!-- 中央カラム（★アイコン） -->
+      <div class="center-group">
+      <img id="page-icon" class="page-icon" src="" alt="page icon">
+      </div>
+      <!-- 右カラム -->
+      <div class="right-group">
       <p>ID: ${getAccountId}</p>
-      <br>
       <p>${getAccountName}さん</p>
       </div>
       </div>
+      </header>
       `;
       header.className = "header";
       header.style.backgroundColor = color;
@@ -138,12 +148,9 @@
     // -----------------------------
     settingIcon: function () {
       if (!flag) return this;
-
       const favicon = document.querySelector('#dynamic-favicon');
-      favicon.href = "PageIcon/EikenTitle.png";
-
+      const pageIcon = document.querySelector('#page-icon'); // ← タイトル下の画像
       const iconBase = "../../../PageIcon/";
-
       const iconMap = {
         grade1: {
           vocabulary: "Level1_Vocabulary.png",
@@ -170,11 +177,25 @@
           listening: "LevelPre2_Listening.png"
         }
       };
+      // ★ デフォルトアイコン（EikenTitle）
+      const defaultIcon = "EikenTitle.png";
+      const defaultPath = "PageIcon/" + defaultIcon;
 
-      if (iconMap[levelParam] && iconMap[levelParam][fieldParam]) {
-        favicon.href = iconBase + iconMap[levelParam][fieldParam];
+      // favicon にデフォルト設定
+      favicon.href = defaultPath;
+
+      // page-icon が存在する場合のみ設定
+      if (pageIcon) {
+        pageIcon.src = defaultPath;
       }
-
+      // ★ レベル＋フィールドに対応するアイコンがある場合は上書き
+      if (iconMap[levelParam] && iconMap[levelParam][fieldParam]) {
+        const iconPath = iconBase + iconMap[levelParam][fieldParam];
+        favicon.href = iconPath;
+        if (pageIcon) {
+          pageIcon.src = iconPath;
+        }
+      }
       return this;
     }
   };
