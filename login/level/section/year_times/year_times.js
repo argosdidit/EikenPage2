@@ -75,7 +75,7 @@
       header.innerHTML =
       `
       <header class="header">
-      <h1>${label} ${fieldLabel} 過去問</h1>
+      <h1>${label} ${fieldLabel}</h1>
       <div class="header-row">
       <!-- 左カラム -->
       <div class="left-group">
