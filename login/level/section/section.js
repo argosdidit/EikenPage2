@@ -66,14 +66,25 @@
       const header = document.getElementById("header");
       header.innerHTML =
       `
+      <header class="header">
+      <h1>${label} 分野選択</h1>
+      <div class="header-row">
+      <!-- 左カラム -->
+      <div class="left-group">
       <a href="../level.html?id=${getAccountId}&name=${getAccountName}" class="BtnBack">← 戻る</a>
       <a href="../../login.html?id=${getAccountId}&name=${getAccountName}" class="BtnLogout">ログアウト</a>
-      <h1>${label} 分野を選択してください</h1>
-      <div class="accont-info">
+      </div>
+      <!-- 中央カラム（★アイコン） -->
+      <div class="center-group">
+      <img id="page-icon" class="page-icon" src="" alt="page icon">
+      </div>
+      <!-- 右カラム -->
+      <div class="right-group">
       <p>ID: ${getAccountId}</p>
-      <br>
       <p>${getAccountName}さん</p>
       </div>
+      </div>
+      </header>
       `;
       header.className = "header";
       header.style.backgroundColor = color;
@@ -123,10 +134,15 @@
     // -----------------------------
     settingIcon: function () {
       if (!flag) return this;
-
       const favicon = document.querySelector('#dynamic-favicon');
-      favicon.href = "../../PageIcon/EikenTitle.png";
-
+      const pageIcon = document.querySelector('#page-icon');
+      const iconPath = "../../PageIcon/EikenTitle.png";
+      // favicon に設定
+      favicon.href = iconPath;
+      // 中央アイコンに設定
+      if (pageIcon) {
+        pageIcon.src = iconPath;
+      }
       return this;
     }
   };

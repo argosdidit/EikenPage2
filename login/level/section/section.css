@@ -2,57 +2,78 @@
   font-family: sans-serif;
   background-color: #f9f9f9;
   margin: 0;
-  padding: 0; /* header の外側に余白を作らない */
-  text-align: center;
+  padding: 0;
 }
 
 /* ヘッダー全体を背景色で覆う */
 header {
+  width: 100%;
+  padding: 8px 12px;
+  box-sizing: border-box;
+
   display: flex;
+  flex-direction: column; /* ← まず縦並び */
   align-items: center;
-  justify-content: center;
-  position: relative;
-  width: 100vw;             /* 横幅いっぱい */
-  box-sizing: border-box;    /* padding を含めて幅計算 */
-  background-color: #ccffcc; /* 緑色 (級に応じて JS で変更可能) */
-  padding: 20px;
-  border-bottom: 1px solid #ddd;
+  gap: 12px;
 }
 
 /* タイトル */
 header h1 {
   margin: 0;
-  font-size: 28px; /* year_times と同じサイズ */
+  font-size: 36px;
+  text-align: center;
+  align-items: center;
 }
 
-/* 戻るボタン */
-.BtnBack {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  text-decoration: none;
-  background: #e0e0e0;
-  padding: 6px 12px;
-  border-radius: 6px;
-  color: #333;
+.page-icon {
+  width: 80px;       /* お好みで調整 */
+  height: auto;
+  margin-top: -4px;  /* タイトルとの距離調整 */
 }
 
+.header-row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 左カラム（戻る・ログアウト） */
+.left-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* 中央カラム（アイコン） */
+.center-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-icon {
+  width: 80px;
+  height: auto;
+}
+
+/* 右カラム（ID・名前） */
+.right-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.BtnBack,
 .BtnLogout {
-  position: absolute;
-  left: 150px;
-  top: 50%;
-  transform: translateY(-50%);
   text-decoration: none;
   background: #e0e0e0;
   padding: 6px 12px;
   border-radius: 6px;
   color: #333;
 }
-
-.BtnBack:hover {
-  background: #ccc;
-}
+.BtnBack:hover,
 .BtnLogout:hover {
   background: #ccc;
 }
@@ -88,6 +109,7 @@ header h1 {
   cursor: pointer;
   transition: transform 0.2s;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 .section-button:hover {
