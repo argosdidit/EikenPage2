@@ -44,7 +44,6 @@
 
       return this;
     },
-
     loadQuiz: async function () {
       const urlParams = new URLSearchParams(window.location.search);
       const level = urlParams.get("level");
@@ -59,7 +58,6 @@
 
       return this;
     },
-
     makeTitleField: function () {
       const header = document.getElementById(conf.header);
       const levelMap = {
@@ -132,7 +130,6 @@
 
       return this;
     },
-
     enableCheck: function () {
       const button = document.getElementById(conf.checkButton);
       
@@ -257,6 +254,9 @@
 
       const questionCount = quizData.length; // ← ここが超重要
 
+      // vocExplanation.html にパスを渡す
+      const url_explanation = `vocExplanation/vocExplanation.html?img=${encodeURIComponent(pathExplanationUrl)}`;
+
       let html =
       `
       <h3>${displayAccount} さんの履歴</h3>
@@ -268,6 +268,10 @@
       <th>DATE-TIME</th>
       ${Array.from({ length: questionCount }, (_, i) => `<th>${i+1}</th>`).join("")}
       </tr>
+      <br>
+      <a href="${url_explanation}" target="_blank" style="margin-top:10px; display:inline-block;">
+      ▶ 解説へ
+      </a>
       `;
       
       data.forEach(row => {
