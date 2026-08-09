@@ -4,20 +4,19 @@
   let
   getAccountId,
   getAccountName,
-    container,
-    quizData = [],
-    data_pathVocExplanation,
-    pathExplanationUrl,
-    levelParam,
-    fieldParam,
-
-    year,
-    times,
-    displayAccount,
-
-    func,
-    active,
-    flag;
+  container,
+  quizData = [],
+  data_pathVocExplanation,
+  pathExplanationUrl,
+  levelParam,
+  fieldParam,
+  year,
+  times,
+  displayAccount,
+  func,
+  active,
+  flag;
+  let isChecked = false;
 
   const conf = {
     container: "quiz-container",
@@ -121,6 +120,10 @@
     },
     enableSelect: function () {
       container.addEventListener("click", (e) => {
+
+        // 採点後は選択肢をクリックしても無反応
+        if (isChecked) return;
+
         if (!e.target.classList.contains("option")) return;
 
         const options = e.target.parentElement.querySelectorAll(".option");
@@ -132,100 +135,108 @@
     },
     enableCheck: function () {
       const button = document.getElementById(conf.checkButton);
-      
       button.addEventListener("click", async () => {
         button.disabled = true;
-
-        let resultArray = [];
-        let score = 0;
         
-        // 25問採点
+        // 採点後は選択肢を操作できないようにする
+        isChecked = true;
+        let resultArray = [];
+        let score = 0; // 25問採点
         container.querySelectorAll(".quiz-box").forEach((box, index) => {
           const selected = box.querySelector(".option.selected");
-          const correctIndex = quizData[index].answer;
-          const correctWord = quizData[index][`word${correctIndex}`];
-
-          const number = (index + 1).toString().padStart(2, "0");
-
-          // 正規表現はテンプレート外で作る
+          const correctIndex = quizData[index].ANSWER;
+          const correctWord = quizData[index][`WORD${correctIndex}`];
+          const number = (index + 1).toString().padStart(2, "0"); // 正規表現はテンプレート外で作る
           const reg = new RegExp("\\[0*" + number + "\\]");
           const questionDiv = box.querySelector(".quiz-question");
-
-          questionDiv.innerHTML = questionDiv.innerHTML.replace(
-            reg,
-            `<span style="color:red;">${correctWord}</span>`
+          questionDiv.innerHTML = questionDiv.innerHTML.replace
+          (
+            reg, `<span style="color:red;">${correctWord}</span>`
           );
-          
-          if (selected) {
+          if(selected)
+          {
             const userAnswer = Number(selected.dataset.value);
-            if (userAnswer === correctIndex) {
-              score++;
-              resultArray[index] = 0;      // 正解
-            } else {
+            if (userAnswer === correctIndex)
+            {
+              score++; resultArray[index] = 0; // 正解
+            }
+            else
+            {
               resultArray[index] = userAnswer; // 不正解（1〜4）
             }
-          } else {
-            resultArray[index] = 99;       // 未回答
+          }
+          else
+          {
+            resultArray[index] = 99; // 未回答
           }
         });
-
         container.querySelectorAll(".quiz-box").forEach((box, index) => {
           const selected = box.querySelector(".option.selected");
           const correctIndex = quizData[index].ANSWER;
           const correctWord = quizData[index][`word${correctIndex}`];
-
-          const number = (index + 1).toString().padStart(2, "0");
-
-          // 正規表現はテンプレート外で作る
+          const number = (index + 1).toString().padStart(2, "0"); // 正規表現はテンプレート外で作る
           const reg = new RegExp("\\[0*" + number + "\\]");
           const questionDiv = box.querySelector(".quiz-question");
-
-          questionDiv.innerHTML = questionDiv.innerHTML.replace(
-            reg,
-            `<span style="color:red;">${correctWord}</span>`
+          questionDiv.innerHTML = questionDiv.innerHTML.replace
+          (
+            reg, `<span style="color:red;">${correctWord}</span>`
           );
 
           let result = document.createElement("div");
           result.textContent = `No.${number} `;
-
-          if (selected) {
+          if (selected)
+          {
             const userAnswer = Number(selected.dataset.value);
-            if (userAnswer === correctIndex) {
-              selected.classList.add("correct");
-              result.textContent += "正解";
-              result.style.color = "green";
-              score++;
-            } else {
-              selected.classList.add("incorrect");
-              result.textContent += "不正解";
-              result.style.color = "red";
+            if (userAnswer === correctIndex)
+            {
+              selected.classList.add("correct"); result.textContent += "正解";
+              result.style.color = "green"; score++;
             }
-          } else {
-            result.textContent += "未回答";
-            result.style.color = "blue";
+            else
+            {
+              selected.classList.add("incorrect"); result.textContent += "不正解";
+              result.style.color = "red";
+
+              const correctOption = box.querySelector
+              (
+                `.option[data-value="${correctIndex}"]`
+              );
+              if (correctOption)
+              {
+                correctOption.classList.add("correct");
+              }
+            }
+          }
+          else
+          {
+            result.textContent += "未回答"; // 未回答は色を設定しない
+            const correctOption = box.querySelector
+            (
+              `.option[data-value="${correctIndex}"]`
+            );
+            if (correctOption)
+            {
+              correctOption.classList.add("correct");
+            }
           }
         });
-
         // ★ ここで 25 個に揃える
-        while (resultArray.length < 25) {
+        while (resultArray.length < 25)
+        {
           resultArray.push(50);
         }
-
         // ★ DATE（YYYYMMDDHHMMSS）
         const now = new Date();
-        const DATE =
-        now.getFullYear().toString() +
-        String(now.getMonth() + 1).padStart(2, "0") +
-        String(now.getDate()).padStart(2, "0") +
-        String(now.getHours()).padStart(2, "0") +
-        String(now.getMinutes()).padStart(2, "0") +
-        String(now.getSeconds()).padStart(2, "0");
-        
+        const DATE = now.getFullYear().toString()
+        + String(now.getMonth() + 1).padStart(2, "0")
+        + String(now.getDate()).padStart(2, "0")
+        + String(now.getHours()).padStart(2, "0")
+        + String(now.getMinutes()).padStart(2, "0")
+        + String(now.getSeconds()).padStart(2, "0");
         // ★ DB 保存 → 履歴表示
         await func.updateResult(resultArray, DATE);
         await func.loadHistory();
       });
-      
       return this;
     },
     updateResult: async function(resultArray, DATE){
