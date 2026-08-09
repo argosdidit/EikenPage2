@@ -144,8 +144,8 @@
         let score = 0; // 25問採点
         container.querySelectorAll(".quiz-box").forEach((box, index) => {
           const selected = box.querySelector(".option.selected");
-          const correctIndex = quizData[index].answer;
-          const correctWord = quizData[index][`word{correctIndex}`];
+          const correctIndex = quizData[index].ANSWER;
+          const correctWord = quizData[index][`WORD${correctIndex}`];
           const number = (index + 1).toString().padStart(2, "0"); // 正規表現はテンプレート外で作る
           const reg = new RegExp("\\[0*" + number + "\\]");
           const questionDiv = box.querySelector(".quiz-question");
@@ -171,6 +171,11 @@
           }
         });
         container.querySelectorAll(".quiz-box").forEach((box, index) => {
+          console.log("quizData:", quizData);
+          console.log("quizData[0]:", quizData[0]);
+          console.log("ANSWER:", quizData[0].ANSWER);
+          console.log("answer:", quizData[0].answer);
+          
           const selected = box.querySelector(".option.selected");
           const correctIndex = quizData[index].answer;
           const correctWord = quizData[index][`word${correctIndex}`];
